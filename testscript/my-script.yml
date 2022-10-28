@@ -1,0 +1,28 @@
+config:
+  target: "http://192.168.100.3"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: Warm up
+    - duration: 120
+      arrivalRate: 10
+      rampTo: 1000
+      name: Ramp up load
+    - duration: 600
+      arrivalRate: 50
+      name: Sustained load
+scenarios:
+  - flow:
+    - get:
+        url: /
+
+#La primera fase es una fase de aceleración lenta para calentar el backend.
+#Esta fase enviará cinco usuarios virtuales a su backend cada segundo durante 60 segundos.
+
+#La segunda fase que sigue comenzará con cinco usuarios virtuales y gradualmente
+#enviará más usuarios cada segundo durante los próximos dos minutos, alcanzando 
+#un máximo de 1000 usuarios virtuales al final de la fase.
+
+#La fase final simula un pico sostenido de 50 usuarios virtuales cada 
+#segundo durante los próximos diez minutos. Esta fase está destinada a hacer
+# una prueba de estrés de su backend para verificar la sostenibilidad del sistema durante un período más prolongado.
